@@ -46,12 +46,15 @@ class MyAdapter(val items : ArrayList<ItemData>) : RecyclerView.Adapter<MyAdapte
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.call -> {
-                    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:${items[position].phone}"))
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${items[position].phone}"))
                     holder.itemView.context.startActivity(intent)
                     true
                 }
                 R.id.mess -> {
-                    val intent = Intent(Intent.ACTION_SEND, Uri.parse("smsto:${items[position].phone}"))
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.setType("vnd.android-dir/mms-sms")
+                    intent.setData(Uri.parse("smsto:${items[position].phone}"))
+                    intent.putExtra(Intent.EXTRA_TEXT, "Message Text")
                     holder.itemView.context.startActivity(intent)
                     true
                 }
@@ -59,8 +62,8 @@ class MyAdapter(val items : ArrayList<ItemData>) : RecyclerView.Adapter<MyAdapte
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "text/plain"
                     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(items[position].mail))
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Email subject")
-                    intent.putExtra(Intent.EXTRA_TEXT, "Email message text")
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Email Subject")
+                    intent.putExtra(Intent.EXTRA_TEXT, "Email Message Text")
                     holder.itemView.context.startActivity(intent)
                     true
                 }
