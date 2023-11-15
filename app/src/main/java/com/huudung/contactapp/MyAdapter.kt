@@ -58,7 +58,7 @@ class MyAdapter(val items : ArrayList<ItemData>) : RecyclerView.Adapter<MyAdapte
                 R.id.mail -> {
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "text/plain"
-                    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("jan@example.com"))
+                    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(items[position].mail))
                     intent.putExtra(Intent.EXTRA_SUBJECT, "Email subject")
                     intent.putExtra(Intent.EXTRA_TEXT, "Email message text")
                     holder.itemView.context.startActivity(intent)
@@ -68,7 +68,6 @@ class MyAdapter(val items : ArrayList<ItemData>) : RecyclerView.Adapter<MyAdapte
             }
         }
 
-        // Xử lý sự kiện khi icon menu được click
         holder.itemView.setOnLongClickListener {
             popupMenu.show()
             true
